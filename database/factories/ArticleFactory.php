@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Article;
+use App\Models\Author;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -24,7 +25,7 @@ class ArticleFactory extends Factory
             'title' => $this->faker->sentence(),
             'body' => $this->faker->paragraphs(3, true),
             'category_id' => Category::inRandomOrder()->first()->id ?? 1,
-            'user_id' => User::inRandomOrder()->first()->id ?? 1,
+            'author_id' => Author::inRandomOrder()->first()->id ?? 1,
         ];
     }
 }

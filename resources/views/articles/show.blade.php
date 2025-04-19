@@ -18,7 +18,7 @@
         {{-- التصنيف والكاتب --}}
         <div class="text-sm text-gray-600 mb-4">
             <p><strong>التصنيف:</strong> {{ $article->category->name ?? 'غير محدد' }}</p>
-            <p><strong>الكاتب:</strong> {{ $article->user->name ?? 'غير معروف' }}</p>
+            <p><strong>الكاتب:</strong> {{ $article->author->name ?? 'غير معروف' }}</p>
         </div>
 
         <hr class="my-4 border-t border-gray-300">

@@ -37,6 +37,20 @@
             </select>
         </div>
 
+        {{-- المؤلف --}}
+        <div class="mb-4">
+            <label for="author_id" class="block text-gray-700 mb-2">المؤلف</label>
+            <select name="author_id" id="author_id" class="w-full border rounded px-4 py-2 focus:outline-none focus:ring focus:border-blue-300" required>
+                <option value="">-- اختر مؤلف --</option>
+                @foreach($authors as $author)
+                    <option value="{{ $author->id }}" 
+                        {{ old('author_id', $article->author_id) == $author->id ? 'selected' : '' }}>
+                        {{ $author->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
         {{-- صورة المقال --}}
         <div class="mb-4">
             <label for="image" class="block text-gray-700 mb-2">صورة المقال الحالية</label>
@@ -56,4 +70,10 @@
 
         {{-- زر الحفظ --}}
         <div class="text-left">
-            <button type="submit" class="bg-green-600 hover:bg
+            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded transition">
+                حفظ التعديلات
+            </button>
+        </div>
+    </form>
+</div>
+@endsection

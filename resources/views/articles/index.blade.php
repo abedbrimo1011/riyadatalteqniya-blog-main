@@ -24,6 +24,7 @@
                     <th class="p-3 text-right">الصورة</th>
                     <th class="p-3 text-right">العنوان</th>
                     <th class="p-3 text-right">التصنيف</th>
+                    <th class="p-3 text-right">المؤلف</th>
                     <th class="p-3 text-right">النبذة</th>
                     <th class="p-3 text-right">الإجراءات</th>
                 </tr>
@@ -52,6 +53,10 @@
                         <td class="p-3">
                             {{ $article->category->name ?? '-' }}
                         </td>
+                        <td class="p-3">
+                            {{ $article->author->name ?? "unknown" }}
+                        </td>
+
                         <td class="p-3">
                             @if($article->owner_bio)
                                 <small class="text-gray-700">{{ Str::limit($article->owner_bio, 100) }}</small>

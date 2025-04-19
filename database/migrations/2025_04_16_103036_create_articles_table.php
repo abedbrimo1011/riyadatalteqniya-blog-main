@@ -16,13 +16,13 @@ return new class extends Migration
             $table->string('title');
             $table->text('body');
             $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('author_id');
             $table->string('image')->nullable(); // صورة المقال
             $table->text('owner_bio')->nullable(); // نبذة عن المالك
             $table->timestamps();
     
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
     

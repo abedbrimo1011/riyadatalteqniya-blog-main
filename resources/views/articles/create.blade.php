@@ -32,6 +32,17 @@
             </select>
         </div>
 
+        {{-- المؤلف --}}
+        <div class="mb-4">
+            <label for="author_id" class="block text-gray-700 mb-2">المؤلف</label>
+            <select name="author_id" id="author_id" class="w-full border rounded px-4 py-2 focus:outline-none focus:ring focus:border-blue-300" required>
+                <option value="">-- اختر مؤلف --</option>
+                @foreach($authors as $author)
+                    <option value="{{ $author->id }}">{{ $author->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
         {{-- صورة المقال --}}
         <div class="mb-4">
             <label for="image" class="block text-gray-700 mb-2">صورة المقال (اختياري)</label>
