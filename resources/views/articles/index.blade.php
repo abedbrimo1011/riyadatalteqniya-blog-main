@@ -31,13 +31,20 @@
             <tbody>
                 @forelse($articles as $article)
                     <tr class="border-b hover:bg-gray-50">
-                        <td class="p-3">
+                        <td style="width: 100px;">
                             @if($article->image)
-                                <img src="{{ asset('storage/' . $article->image) }}" alt="صورة" class="w-20 h-20 object-cover rounded">
+                                <div class="ratio ratio-1x1">
+                                    <img src="{{ asset('storage/' . $article->image) }}"
+                                         alt="صورة المقال"
+                                         class="rounded border object-fit-cover"
+                                         style="max-height: 80px; max-width: 100%; object-fit: cover;">
+                                </div>
                             @else
-                                <span class="text-gray-400">لا توجد صورة</span>
+                                <span class="text-muted">لا توجد صورة</span>
                             @endif
                         </td>
+                        
+                        
                         <td class="p-3">
                             <strong>{{ $article->title }}</strong><br>
                             <small class="text-gray-500">بواسطة: {{ $article->user->name ?? 'غير معروف' }}</small>

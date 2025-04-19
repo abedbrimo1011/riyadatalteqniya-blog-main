@@ -1,31 +1,41 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            لوحة التحكم
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+@section('title', 'لوحة التحكم')
 
-            <!-- عدد المقالات -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <h3 class="text-lg font-bold text-gray-700">عدد المقالات</h3>
-                <p class="mt-2 text-2xl text-indigo-600">{{ $articlesCount }}</p>
+@section('content')
+<div class="container py-4">
+    <div class="row g-4">
+
+        <!-- عدد المقالات -->
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title text-muted">عدد المقالات</h5>
+                    <p class="card-text fs-2 text-primary">{{ $articlesCount }}</p>
+                </div>
             </div>
-
-            <!-- عدد التصنيفات -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <h3 class="text-lg font-bold text-gray-700">عدد التصنيفات</h3>
-                <p class="mt-2 text-2xl text-indigo-600">{{ $categoriesCount }}</p>
-            </div>
-
-            <!-- عدد المستخدمين -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <h3 class="text-lg font-bold text-gray-700">عدد المستخدمين</h3>
-                <p class="mt-2 text-2xl text-indigo-600">{{ $usersCount }}</p>
-            </div>
-
         </div>
+
+        <!-- عدد التصنيفات -->
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title text-muted">عدد التصنيفات</h5>
+                    <p class="card-text fs-2 text-success">{{ $categoriesCount }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- عدد المستخدمين -->
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title text-muted">عدد المستخدمين</h5>
+                    <p class="card-text fs-2 text-warning">{{ $usersCount }}</p>
+                </div>
+            </div>
+        </div>
+
     </div>
-</x-app-layout>
+</div>
+@endsection

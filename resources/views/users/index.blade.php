@@ -3,55 +3,44 @@
 @section('title', 'إدارة المستخدمين')
 
 @section('content')
-<div class="container" dir="rtl">
-    <h2 class="text-xl font-bold mb-4">إدارة المستخدمين</h2>
+<div class="container mt-4" dir="rtl">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">إدارة المستخدمين</h5>
+        </div>
 
-    <div class="bg-white shadow rounded-lg p-6">
-        <table class="min-w-full table-auto border-collapse">
-            <thead>
-                <tr>
-                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase border-b">الاسم</th>
-                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase border-b">البريد الإلكتروني</th>
-                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase border-b">تاريخ الإنشاء</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-                @foreach($users as $user)
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $user->name }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $user->email }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $user->created_at->format('Y-m-d') }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <div class="card-body">
+            @if($users->count())
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle text-center">
+                        <thead class="table-light">
+                            <tr>
+                                <th>الاسم</th>
+                                <th>البريد الإلكتروني</th>
+                                <th>تاريخ الإنشاء</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($users as $user)
+                                <tr>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $user->created_at->format('Y-m-d') }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
-        <!-- روابط الباجيناشن -->
-        <div class="mt-4">
-            <div class="pagination">
-                {{ $users->links() }}
-            </div>
+                <div class="d-flex justify-content-center mt-3">
+                    {{ $users->links('pagination::bootstrap-5') }}
+                </div>
+            @else
+                <div class="alert alert-warning text-center">
+                    لا يوجد مستخدمون حالياً.
+                </div>
+            @endif
         </div>
     </div>
 </div>
 @endsection
-
-@push('styles')
-    <style>
-        /* تصغير حجم الأسهم في الباجيناشن */
-        .pagination .page-link {
-            font-size: 0.8rem; /* تصغير الخط */
-            padding: 0.5rem 1rem; /* تصغير الحجم */
-        }
-
-        .pagination .page-item .page-link {
-            font-size: 0.8rem;
-        }
-
-        .pagination .page-item:first-child .page-link,
-        .pagination .page-item:last-child .page-link {
-            font-size: 0.8rem;
-            padding: 0.5rem 0.8rem;
-        }
-    </style>
-@endpush
