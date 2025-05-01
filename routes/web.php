@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\DashboardController;
 
 // الصفحة الرئيسية
 Route::get('/', function () {
@@ -17,14 +18,7 @@ Route::get('/', function () {
 });
 
 // صفحة لوحة التحكم
-Route::get('/dashboard', function () {
-    return view('dashboard', [
-        'articlesCount' => Article::count(),
-        'categoriesCount' => Category::count(),
-        'usersCount' => User::count(),
-        
-    ]);
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class,"index"])->middleware(['auth'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     // الملف الشخصي
@@ -48,4 +42,4 @@ Route::middleware('auth')->group(function () {
 });
 
 // تسجيل الدخول والتسجيل
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
