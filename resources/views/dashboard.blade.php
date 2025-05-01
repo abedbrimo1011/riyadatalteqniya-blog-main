@@ -3,7 +3,7 @@
 @section('title', 'لوحة التحكم')
 
 @section('content')
-<div class="container py-5" dir="rtl">
+<div class="container py-5" >
     <h1 class="mb-4 text-center">لوحة التحكم</h1>
 
     <div class="row g-4">
