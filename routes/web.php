@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
     // المؤلفين (للمشرفين فقط)
-    Route::middleware('admin')->group(function () {
+    Route::middleware('auth')->group(function () {
         Route::resource('authors', UserController::class);
     });
 });

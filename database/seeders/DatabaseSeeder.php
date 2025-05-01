@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
          User::factory(10)->create();
         Category::factory(5)->create();
         Article::factory(50)->create();
-        Author::factory(20)->create();
+        User::factory(20)->create(['role' => 'author']);
 
         User::factory()->create([
             'name' => 'Test User',

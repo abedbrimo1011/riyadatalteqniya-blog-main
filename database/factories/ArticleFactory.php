@@ -25,7 +25,7 @@ class ArticleFactory extends Factory
             'title' => $this->faker->sentence(),
             'body' => $this->faker->paragraphs(3, true),
             'category_id' => Category::inRandomOrder()->first()->id ?? 1,
-            'author_id' => Author::inRandomOrder()->first()->id ?? 1,
+            'author_id' => User::where('role', 'author')->inRandomOrder()->first()->id ?? User::factory()->create(['role' => 'author'])->id,
         ];
     }
 }
