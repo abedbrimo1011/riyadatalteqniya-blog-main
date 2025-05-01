@@ -4,27 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Category;
-use App\Models\Author; 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Enums\UserRole;
 
 class ArticleController extends Controller
 {
-    // to display all articles through a certain form
+    // عرض كل المقالات
     public function index()
     {
-        
         $articles = Article::with(['category', 'author'])->latest()->paginate(10); 
         return view('articles.index', compact('articles'));
     }
 
-    // عرض فورم إنشاء مقال جديد
+    // فورم إنشاء مقال
     public function create()
     {
         $categories = Category::all();
-        $authors = Author::all();
-        return view('articles.create', compact('categories','authors'));
+        $authors = User::where('role', UserRole::AUTHOR)->get(); // المؤلفين فقط
+        return view('articles.create', compact('categories', 'authors'));
     }
 
     // عرض مقال واحد
@@ -33,7 +32,7 @@ class ArticleController extends Controller
         return view('articles.show', compact('article'));
     }
 
-    // حفظ المقال في قاعدة البيانات
+    // حفظ المقال الجديد
     public function store(Request $request)
     {
         $request->validate([
@@ -41,34 +40,33 @@ class ArticleController extends Controller
             'body' => 'required|string',
             'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|max:2048',
-            'owner_bio' => 'nullable|string|max:500',
-            'author_id' => 'required|exists:authors,id',
+            'author_bio' => 'nullable|string|max:500',
         ]);
-
-        $data = $request->all();
-        $data['author_id'] = Auth::id(); // ربط المقال بالمؤلف المسجل
-
-        // إذا تم رفع صورة
+        
+        $data = $request->only(['title', 'body', 'category_id', 'image', 'author_bio']);
+        $userId = auth()->id();
+        $data['author_id'] = $userId; 
+        
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('articles', 'public');
         }
-
+        
         Article::create($data);
-
+        
         return redirect()->route('articles.index')
                          ->with('success', 'تمت إضافة المقال بنجاح');
-    }
+         }
 
-    // عرض فورم تعديل المقال
+    // فورم تعديل مقال
     public function edit(Article $article)
     {
         $categories = Category::all();
-        $authors = Author::all();
+        $authors = User::where('role', UserRole::AUTHOR)->get(); // المؤلفين فقط
 
-        return view('articles.edit', compact('article', 'categories','authors'));
+        return view('articles.edit', compact('article', 'categories', 'authors'));
     }
 
-    // تحديث بيانات المقال
+    // تعديل مقال
     public function update(Request $request, Article $article)
     {
         $request->validate([
@@ -76,24 +74,22 @@ class ArticleController extends Controller
             'body' => 'required|string',
             'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|max:2048',
-            'owner_bio' => 'nullable|string|max:500',
-            'author_id' => 'required|exists:authors,id', 
+            'author_bio' => 'nullable|string|max:500',
         ]);
-
-        $data = $request->all();
-
-        // إذا تم رفع صورة جديدة
+        
+        $data = $request->only(['title', 'body', 'category_id', 'image', 'author_bio']);
+       $userId = auth()->id();
+        $data['author_id'] = $userId; 
+        
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('articles', 'public');
         }
-
-        // تحديث المقال باستخدام author_id
+        
         $article->update($data);
-
+        
         return redirect()->route('articles.index')
                          ->with('success', 'تم تعديل المقال بنجاح');
-    }
-
+          }
     // حذف مقال
     public function destroy(Article $article)
     {

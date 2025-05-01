@@ -9,6 +9,7 @@ use App\Models\Author;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthorController;
 
 // الصفحة الرئيسية
 Route::get('/', function () {
@@ -17,16 +18,14 @@ Route::get('/', function () {
 
 // صفحة لوحة التحكم
 Route::get('/dashboard', function () {
-    
     return view('dashboard', [
         'articlesCount' => Article::count(),
         'categoriesCount' => Category::count(),
         'usersCount' => User::count(),
-        'authorsCount' => Author::count(),
+        
     ]);
 })->middleware(['auth'])->name('dashboard');
 
-// راوتات للمستخدمين المسجلين فقط
 Route::middleware('auth')->group(function () {
     // الملف الشخصي
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -41,9 +40,12 @@ Route::middleware('auth')->group(function () {
 
     // المستخدمين
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
+
+    // المؤلفين (للمشرفين فقط)
+    Route::middleware('admin')->group(function () {
+        Route::resource('authors', UserController::class);
+    });
 });
 
 // تسجيل الدخول والتسجيل
 require __DIR__.'/auth.php';
-
-

@@ -37,14 +37,14 @@
         </div>
 
         <!-- عدد المؤلفين -->
-        <div class="col-md-3">
+        {{-- <div class="col-md-3">
             <div class="card text-center shadow-sm border-0">
                 <div class="card-body">
                     <h5 class="card-title text-muted">عدد المؤلفين</h5>
                     <p class="card-text fs-2 text-info">{{ $authorsCount }}</p> <!-- عرض عدد المؤلفين هنا -->
                 </div>
             </div>
-        </div>
+        </div> --}}
 
     </div>
 </div>
